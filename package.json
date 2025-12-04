@@ -1,0 +1,20 @@
+{
+  "name": "meriyah-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "bundle": "esbuild --bundle ./run.ts --outdir=dist --platform=node --format=esm",
+    "polyfill": "cat polyfill/setup.js polyfill/intl.js dist/run.js > run.js",
+    "build": "npm run bundle && npm run polyfill"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.23.0",
+  "dependencies": {
+    "astring": "^1.9.0",
+    "esbuild": "^0.27.0",
+    "meriyah": "^7.0.0"
+  }
+}
