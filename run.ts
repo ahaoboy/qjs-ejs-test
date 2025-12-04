@@ -10,4 +10,5 @@ const t2 = Date.now()
 const code = generate(ast)
 console.log("generate:", Date.now() - t2)
 
-console.log("finish:", code.length)
+console.log("finish:", Date.now() - t1)
+console.log("code length:", code.length)
