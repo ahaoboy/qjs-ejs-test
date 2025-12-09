@@ -1,0 +1,43 @@
+name: bench
+
+permissions:
+  contents: write
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: build
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: install ei
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/easy-install/easy-install/main/install.sh | sh
+
+      - name: install qjs
+        run: |
+          ei https://github.com/ahaoboy/quickjs-build
+          ei https://github.com/quickjs-ng/quickjs --alias qjs-ng
+      - uses: actions/setup-node@v4
+        with:
+          node-version: latest
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      - name: build
+        run: |
+          pnpm i
+          pnpm run build
+      - name: bench
+        run: |
+          time qjs run.js
+          time qjs-ng run.js
